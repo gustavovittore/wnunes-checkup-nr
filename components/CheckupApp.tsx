@@ -49,7 +49,6 @@ type Lead = {
 };
 
 const TOTAL_STEPS = 14;
-const WHATSAPP_NUMBER = "";
 
 const initialAnswers: Answers = {
   segment: "",
@@ -863,13 +862,6 @@ export default function CheckupApp() {
     }
   }
 
-  const conversionWhatsappText = encodeURIComponent(
-    "Olá, fiz o Check-up NR Empresarial e meu diagnóstico indicou pontos de atenção. Gostaria de falar com um especialista da WNUNES para entender os próximos passos para minha empresa.",
-  );
-  const conversionWhatsappUrl = WHATSAPP_NUMBER
-    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${conversionWhatsappText}`
-    : `https://api.whatsapp.com/send?text=${conversionWhatsappText}`;
-
   const screenPhoto = showConversion
     ? brandPhotos[brandPhotos.length - 1]
     : showResult
@@ -1431,9 +1423,9 @@ export default function CheckupApp() {
 
                       <div className="mt-10 flex w-full flex-col items-center gap-4 border-t border-neutral-200 pt-8">
                         <a
-                          href={conversionWhatsappUrl}
+                          href="https://wa.me/5512997572188?text=Ol%C3%A1!%20Acabei%20de%20concluir%20o%20Check-up%20NR%20Empresarial%20da%20WNUNES%20e%20gostaria%20de%20entender%20melhor%20os%20pontos%20de%20aten%C3%A7%C3%A3o%20identificados%20no%20diagn%C3%B3stico%20da%20minha%20empresa.%20Podemos%20conversar%3F"
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="inline-flex w-full max-w-2xl items-center justify-center rounded-[1.55rem] bg-[#009941] px-8 py-5 text-center text-base font-black text-white shadow-[0_20px_48px_rgba(0,153,65,0.34),0_0_28px_rgba(0,153,65,0.18)] transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-[#007d35] sm:text-lg"
                         >
                           Falar agora com especialista no WhatsApp
