@@ -872,6 +872,7 @@ export default function CheckupApp() {
   const isLeadStep = !showResult && !showConversion && currentStep === TOTAL_STEPS;
   const isReportScreen = showResult && !showConversion;
   const isScrollableScreen = isReportScreen || showConversion;
+  const isInteractiveScreen = !showResult && !showConversion;
   const isFullWidthScreen = isRiskActivityStep || isLeadStep || isReportScreen || showConversion;
   const reportNrs = result.nrs.filter((nr) => nrVisuals[nr]);
   const reportTone =
@@ -1034,44 +1035,45 @@ export default function CheckupApp() {
 
               <div
                 className={[
-                  "flex min-h-[640px] flex-col justify-center p-6 pt-9 sm:p-10 sm:pt-11 lg:grid lg:grid-rows-[minmax(0,1fr)_auto] lg:content-stretch",
+                  "relative flex min-h-[640px] flex-col justify-center p-6 pt-9 sm:p-10 sm:pt-11 lg:grid lg:grid-rows-[minmax(0,1fr)_auto] lg:content-stretch",
                   isScrollableScreen ? "lg:min-h-0 lg:p-0" : "lg:min-h-0",
                   isScrollableScreen ? "" : isFullWidthScreen ? "lg:p-6 lg:px-8" : "lg:p-4 lg:pl-5",
+                  isInteractiveScreen ? "overflow-hidden" : "",
                 ].join(" ")}
               >
+                {isInteractiveScreen && (
+                  <Image
+                    src="/brand/2/background-main-wnunes.png.png"
+                    alt=""
+                    fill
+                    sizes="100vw"
+                    className="pointer-events-none absolute inset-0 z-0 object-cover object-right-bottom opacity-60"
+                    aria-hidden="true"
+                  />
+                )}
+
                 {!showResult && !showConversion && currentStep === 1 && (
-                  <div className="lg:min-h-0">
-                    <span className="w-fit rounded-full border border-[#C2DFB9] bg-[#C2DFB9]/45 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-[#009941]">
+                  <div className="relative z-10 lg:min-h-0">
+                    <span className="relative z-10 w-fit rounded-full border border-[#C2DFB9] bg-[#C2DFB9]/45 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-[#009941]">
                       Análise inicial
                     </span>
-                    <h1 className="mt-6 text-3xl font-black leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl lg:mt-4 lg:text-[2.65rem]">
+                    <h1 className="relative z-10 mt-6 text-3xl font-black leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl lg:mt-4 lg:text-[2.65rem]">
                       Sua empresa tem visibilidade sobre treinamentos NR, certificados e controles?
                     </h1>
-                    <p className="mt-5 text-lg leading-8 text-neutral-700 lg:mt-4 lg:leading-7">
+                    <p className="relative z-10 mt-5 text-lg leading-8 text-neutral-700 lg:mt-4 lg:leading-7">
                       Em poucos minutos, a WNUNES ajuda a organizar um primeiro diagnóstico sobre
                       possíveis pontos de atenção. O resultado não substitui avaliação técnica, mas
                       indica onde vale olhar primeiro.
                     </p>
 
-                    <div className="mt-9 grid gap-4 sm:grid-cols-3 lg:mt-6 lg:gap-3">
-                      {["Sem backend", "Sem banco de dados", "Resultado imediato"].map((item) => (
-                        <div
-                          key={item}
-                          className="rounded-2xl border border-[#C2DFB9]/80 bg-white p-4 text-sm font-bold text-neutral-700 shadow-[0_12px_28px_rgba(15,23,42,0.06)] transition duration-200 hover:-translate-y-0.5 hover:border-[#009941] hover:shadow-[0_18px_36px_rgba(15,23,42,0.09)]"
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-
-                    <button type="button" onClick={goNext} className={`${primaryButtonClass} mt-10 w-full sm:w-fit lg:mt-7`}>
+                    <button type="button" onClick={goNext} className={`${primaryButtonClass} relative z-10 mt-6 w-full px-8 py-5 shadow-[0_20px_46px_rgba(0,153,65,0.34),0_0_24px_rgba(0,153,65,0.16)] sm:w-fit lg:mt-5`}>
                       Iniciar check-up
                     </button>
                   </div>
                 )}
 
                 {!showResult && !showConversion && question && (
-                  <div className="lg:min-h-0">
+                  <div className="relative z-10 lg:min-h-0">
                     <div className="flex flex-wrap items-center gap-2 text-sm font-semibold text-neutral-500">
                       <span>Início</span>
                       <span className="text-[#009941]">&gt;</span>
@@ -1141,7 +1143,7 @@ export default function CheckupApp() {
                 )}
 
                 {!showResult && !showConversion && currentStep === TOTAL_STEPS && (
-                  <form onSubmit={submitLead}>
+                  <form onSubmit={submitLead} className="relative z-10">
                     <p className="text-sm font-black text-[#009941]">Dados para receber a análise</p>
                     <h2 className="mt-3 text-3xl font-black leading-tight tracking-tight text-neutral-950 sm:text-4xl lg:text-[1.8rem]">
                       Para liberar seu diagnóstico, informe os dados de contato.
@@ -1428,6 +1430,14 @@ export default function CheckupApp() {
                           rel="noopener noreferrer"
                           className="inline-flex w-full max-w-2xl items-center justify-center rounded-[1.55rem] bg-[#009941] px-8 py-5 text-center text-base font-black text-white shadow-[0_20px_48px_rgba(0,153,65,0.34),0_0_28px_rgba(0,153,65,0.18)] transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-[#007d35] sm:text-lg"
                         >
+                          <Image
+                            src="/icons/icon-whatsapp.png.png"
+                            alt=""
+                            width={22}
+                            height={22}
+                            className="mr-2.5 h-5 w-5 shrink-0 object-contain sm:h-[22px] sm:w-[22px]"
+                            aria-hidden="true"
+                          />
                           Falar agora com especialista no WhatsApp
                         </a>
                         <p className="max-w-2xl text-center text-base font-semibold leading-7 text-neutral-600">
@@ -1443,7 +1453,7 @@ export default function CheckupApp() {
                 )}
 
                 {!showResult && !showConversion && currentStep > 1 && currentStep < TOTAL_STEPS && (
-                  <div className="mt-8 flex flex-col-reverse gap-3 border-t border-neutral-100 bg-white pt-6 sm:flex-row sm:justify-between lg:mt-0 lg:pt-3">
+                  <div className="relative z-10 mt-8 flex flex-col-reverse gap-3 border-t border-neutral-100 bg-white pt-6 sm:flex-row sm:justify-between lg:mt-0 lg:pt-3">
                     <button type="button" onClick={goBack} className={secondaryButtonClass}>
                       Voltar
                     </button>
